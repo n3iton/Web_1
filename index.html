@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ermakov</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            border: 0;
+        }
+
+        *,
+        *:before,
+        *:after {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        :focus,
+        :active {
+            outline: none;
+        }
+
+        a:focus,
+        a:active {
+            outline: none;
+        }
+
+        nav,
+        footer,
+        header,
+        aside {
+            display: block;
+        }
+
+
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+            font-size: 100%;
+            line-height: 1;
+            font-size: 14px;
+            -ms-text-size-adjust: 100%;
+            -moz-text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100%;
+        }
+
+
+        input,
+        button,
+        textarea {
+            font-family: inherit;
+        }
+
+
+        input::-ms-clear {
+            display: none;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        button::-moz-focus-inner {
+            padding: 0;
+            border: 0;
+        }
+
+        a,
+        a:visited {
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: none;
+        }
+
+        ul li {
+            list-style: none;
+        }
+
+        img {
+            vertical-align: top;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-size: inherit;
+            font-weight: 400;
+        }
+
+        body {
+            font-family: sans-serif;
+            line-height: 1.5;
+            display:flex; 
+            flex-direction:column; 
+            justify-content: space-between;
+        }
+        .header {
+            text-align: center;
+            text-shadow: 1px 1px 10px royalblue;
+        }
+        .header:hover {
+            font-size: 20px;
+            transition: 1s;
+        }
+        .main {
+            max-width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        
+        .main__input {
+            padding-left: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .main__input > div {
+            background-color: #eceff1;
+            padding: 5px;
+            border: darkblue 1px solid;
+        }
+        
+        div#chooseY {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        input {
+            border: steelblue 1px solid;
+            margin: 5px;
+        }
+
+        .main__area {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+
+        .main__table {
+            padding-right: 20px;
+        }
+
+        table {
+            border-collapse: collapse;
+            text-align: center;
+        }
+        th {
+            background: #AFCDE7;
+            color: white;
+            padding: 10px 20px;
+        }
+        th, td {
+            border-style: solid;
+            border-width: 0 1px 1px 0;
+            border-color: white;
+        }
+        td {
+            background: #D8E6F3;
+        }
+        th:first-child, td:first-child {
+            text-align: center;
+        }
+
+        .footer{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding-bottom: 20px;
+        }
+
+        img.github {
+            transition: transform .8s ease-in-out;
+        }
+
+        img.github:hover {
+            transform: rotate(360deg);
+        }
+
+        .custom-checkbox {
+            position: absolute;
+            z-index: -1;
+            opacity: 0;
+        }
+
+        .custom-checkbox+label {
+            display: inline-flex;
+            align-items: center;
+            user-select: none;
+        }
+        .custom-checkbox+label::before {
+            content: '';
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            flex-shrink: 0;
+            flex-grow: 0;
+            border: 1px solid #adb5bd;
+            border-radius: 0.25em;
+            margin-right: 0.5em;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 50% 50%;
+        }
+        .custom-checkbox:checked+label::before {
+            border-color: #0b76ef;
+            background-color: #0b76ef;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3e%3c/svg%3e");
+        }
+        /* стили при наведении курсора на checkbox */
+        .custom-checkbox:not(:disabled):not(:checked)+label:hover::before {
+            border-color: #b3d7ff;
+        }
+        /* стили для активного состояния чекбокса (при нажатии на него) */
+        .custom-checkbox:not(:disabled):active+label::before {
+            background-color: #b3d7ff;
+            border-color: #b3d7ff;
+        }
+        /* стили для чекбокса, находящегося в фокусе */
+        .custom-checkbox:focus+label::before {
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+        /* стили для чекбокса, находящегося в фокусе и не находящегося в состоянии checked */
+        .custom-checkbox:focus:not(:checked)+label::before {
+            border-color: #80bdff;
+        }
+        /* стили для чекбокса, находящегося в состоянии disabled */
+        .custom-checkbox:disabled+label::before {
+            background-color: #e9ecef;
+        }
+
+        /* для элемента input c type="radio" */
+        .custom-radio {
+            position: absolute;
+            z-index: -1;
+            opacity: 0;
+        }
+        /* для элемента label связанного с .custom-radio */
+        .custom-radio+label {
+            display: inline-flex;
+            align-items: center;
+            user-select: none;
+        }
+        /* создание в label псевдоэлемента  before со следующими стилями */
+        .custom-radio+label::before {
+            content: '';
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            flex-shrink: 0;
+            flex-grow: 0;
+            border: 1px solid #adb5bd;
+            border-radius: 50%;
+            margin-right: 0.5em;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 50% 50%;
+        }
+        /* стили при наведении курсора на радио */
+        .custom-radio:not(:disabled):not(:checked)+label:hover::before {
+            border-color: #b3d7ff;
+        }
+        /* стили для активной радиокнопки (при нажатии на неё) */
+        .custom-radio:not(:disabled):active+label::before {
+            background-color: #b3d7ff;
+            border-color: #b3d7ff;
+        }
+        /* стили для радиокнопки, находящейся в фокусе */
+        .custom-radio:focus+label::before {
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+        /* стили для радиокнопки, находящейся в фокусе и не находящейся в состоянии checked */
+        .custom-radio:focus:not(:checked)+label::before {
+            border-color: #80bdff;
+        }
+        /* стили для радиокнопки, находящейся в состоянии checked */
+        .custom-radio:checked+label::before {
+            border-color: #0b76ef;
+            background-color: #0b76ef;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e");
+        }
+        /* стили для радиокнопки, находящейся в состоянии disabled */
+        .custom-radio:disabled+label::before {
+            background-color: #e9ecef;
+        }
+
+        legend {
+            color: steelblue;
+            font-weight: bold;
+        }
+        #submit {
+            border: 1px solid black;
+            border-radius: 3px;
+        }
+
+        #submit:hover {
+            background-color: #0b76ef;
+        }
+
+        #submit:active {
+            background-color: chartreuse;
+        }
+
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+</head>
+<body>
+    <div class="header">
+        <h1 class="header__FIO">Ермаков Никита Сергеевич</h1>
+        <h2 class="header__groupNumber">Группа P3212</h2>
+        <h3 class="header__variant">Вариант 12024</h3>
+    </div>
+    
+    <div class="main">
+        <div class="main__input">
+                <div id="chooseX">
+                    <legend>Choose X</legend>
+                    <input type="checkbox" class="custom-checkbox" name="X" id = "1" value="-5"><label for="1">-5</label><br> 
+                    <input type="checkbox" class="custom-checkbox" name="X" id = "2" value="-4"><label for="2">-4</label><br>
+                    <input type="checkbox" class="custom-checkbox" name="X" id = "3" value="-3"><label for="3">-3</label><br>
+                    <input type="checkbox" class="custom-checkbox" name="X" id = "4" value="-2"><label for="4">-2</label><br>
+                    <input type="checkbox" class="custom-checkbox" name="X" id = "5" value="-1"><label for="5">-1</label><br>
+                    <input type="checkbox" class="custom-checkbox" name="X" id = "6" value="0"><label for="6">0</label><br>
+                    <input type="checkbox" class="custom-checkbox" name="X" id = "7" value="1"><label for="7">1</label><br>
+                    <input type="checkbox" class="custom-checkbox" name="X" id = "8" value="2"><label for="8">2</label><br>
+                    <input type="checkbox" class="custom-checkbox" name="X" id = "9" value="3"><label for="9">3</label><br>
+                </div>
+                <div id="chooseY">
+                    <div>
+                        <legend>Choose Y</legend>
+                        <input type="text" name="Y" id = "Y" placeholder="Choose Y from -5 to 3"> 
+                    </div>
+                    <button id="submit">Отправить</button>
+                </div>
+                <div id=chooseR>
+                    <legend>Choose R</legend>
+                    <input class="custom-radio" type="radio" name="R" id="10" value="1"><label for="10">1</label>
+                    <input class="custom-radio" type="radio" name="R" id="11" value="2"><label for="11">2</label>
+                    <input class="custom-radio" type="radio" name="R" id="12" value="3"><label for="12">3</label>
+                    <input class="custom-radio" type="radio" name="R" id="13" value="4"><label for="13">4</label>
+                    <input class="custom-radio" type="radio" name="R" id="14" value="5"><label for="14">5</label>
+                </div>
+        </div>
+        <div class="main__area">
+            <img src="Area.png" alt="">
+        </div>
+        <div class="main__table">
+            <table class="result_table">
+                <thead>
+                    <tr>
+                        <th>X</th>
+                        <th>Y</th>
+                        <th>R</th>
+                        <th>Результат</th>
+                        <th>Текущее время</th>
+                        <th>Время работы</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div>
+            <a href="https://github.com/n3iton/Web1">
+                <img class="github" src="GitHub-Mark-64px.png" width="50" height="50" alt="github">
+            </a>
+        </div>
+    </div>
+
+    <script src="script.js">
+    </script>
+</body>
+</html>
