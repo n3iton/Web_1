@@ -119,6 +119,7 @@
         }
         
         .main__input {
+            max-width: 500px;
             padding-left: 20px;
             display: flex;
             flex-wrap: wrap;
@@ -151,6 +152,8 @@
 
         .main__table {
             padding-right: 20px;
+            max-height: 240px;
+            overflow: scroll;
         }
 
         table {
@@ -326,7 +329,7 @@
     <div class="main">
         <div class="main__input">
                 <div id="chooseX">
-                    <legend>Choose X</legend>
+                    <legend id="wrong_field_X" >Choose X</legend>
                     <input type="checkbox" class="custom-checkbox" name="X" id = "1" value="-5"><label for="1">-5</label><br> 
                     <input type="checkbox" class="custom-checkbox" name="X" id = "2" value="-4"><label for="2">-4</label><br>
                     <input type="checkbox" class="custom-checkbox" name="X" id = "3" value="-3"><label for="3">-3</label><br>
@@ -339,13 +342,13 @@
                 </div>
                 <div id="chooseY">
                     <div>
-                        <legend>Choose Y</legend>
+                        <legend id="wrong_field_Y">Choose Y</legend>
                         <input type="text" name="Y" id = "Y" placeholder="Choose Y from -5 to 3"> 
                     </div>
                     <button id="submit">Отправить</button>
                 </div>
                 <div id=chooseR>
-                    <legend>Choose R</legend>
+                    <legend id="wrong_field_R">Choose R</legend>
                     <input class="custom-radio" type="radio" name="R" id="10" value="1"><label for="10">1</label>
                     <input class="custom-radio" type="radio" name="R" id="11" value="2"><label for="11">2</label>
                     <input class="custom-radio" type="radio" name="R" id="12" value="3"><label for="12">3</label>
@@ -369,6 +372,9 @@
                     </tr>
                 </thead>
             </table>
+            <div>
+                <button id="clear">Очистить</button>
+            </div>
         </div>
     </div>
 
