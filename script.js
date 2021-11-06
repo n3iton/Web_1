@@ -70,7 +70,7 @@ function submit () {
             return;
         }
 
-        $(".main__table tr:gt(0)").remove(); 
+        $(".scroll-table tr:gt(0)").remove(); 
         let result = JSON.parse(xhr.responseText);
         for (let i in result.response) {
             let nRow = '<tr>';
@@ -81,7 +81,7 @@ function submit () {
             nRow += '<td>' + result.response[i].currentTime + '</td>';
             nRow += '<td>' + result.response[i].processingTime + '</td>';
             nRow += '</tr>';
-            $('.result_table').append(nRow);
+            $('#result-table').append(nRow);
         }
     };
     }
@@ -93,7 +93,7 @@ function clear () {
     let xhr = new XMLHttpRequest();
     xhr.open("GET", url);
     xhr.send();
-    $(".result_table tr:gt(0)").remove();
+    $(".scroll-table tr:gt(0)").remove();
 }
 
 $("input:checkbox").on('click', function() {

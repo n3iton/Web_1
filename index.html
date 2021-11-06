@@ -101,28 +101,30 @@
             line-height: 1.5;
             display:flex; 
             flex-direction:column; 
-            justify-content: space-between;
+            justify-content: space-around;
+            align-items: center;
         }
         .header {
             text-align: center;
-            text-shadow: 1px 1px 10px royalblue;
+            color: whitesmoke;
+            text-shadow: 1px 1px 10px wheat;
+            transition: 1s;
         }
         .header:hover {
-            font-size: 20px;
-            transition: 1s;
+            transform: scale(1.3);
         }
         .main {
             max-width: 100%;
-            display: flex;
+            display: inline-flex;
+            text-align: center;
             flex-wrap: wrap;
-            justify-content: space-between;
+            justify-content: center;
         }
         
         .main__input {
             max-width: 500px;
             padding-left: 20px;
             display: flex;
-            flex-wrap: wrap;
             justify-content: space-between;
         }
 
@@ -147,19 +149,20 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
-        }
-
-
-        .main__table {
-            padding-right: 20px;
-            max-height: 240px;
-            overflow: scroll;
+            border: #09022e 2px solid;
         }
 
         table {
             border-collapse: collapse;
-            text-align: center;
         }
+
+        .scroll-table {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 0px;
+            margin-bottom: 20px;
+        }
+
         th {
             background: #AFCDE7;
             color: white;
@@ -176,7 +179,7 @@
         th:first-child, td:first-child {
             text-align: center;
         }
-
+        
         .footer{
             display: flex;
             flex-wrap: wrap;
@@ -316,6 +319,9 @@
             background-color: chartreuse;
         }
 
+        body {
+            background: linear-gradient(90deg, #09022e,#ff1154);
+        }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 </head>
@@ -359,24 +365,26 @@
         <div class="main__area">
             <img src="Area.png" alt="">
         </div>
-        <div class="main__table">
-            <table class="result_table">
-                <thead>
-                    <tr>
-                        <th>X</th>
-                        <th>Y</th>
-                        <th>R</th>
-                        <th>Результат</th>
-                        <th>Текущее время</th>
-                        <th>Время работы</th>
-                    </tr>
-                </thead>
-            </table>
-            <div>
-                <button id="clear">Очистить</button>
-            </div>
-        </div>
     </div>
+
+        <div class="scroll-table">
+            <table id="result-table">
+                <thead>
+                    <tr>  
+                        <th>X</th>    
+                        <th>Y</th>    
+                        <th>R</th>    
+                        <th>Результат</th>    
+                        <th>Текущее время</th>
+                        <th>Время работы</th>    
+                    </tr>    
+                </thead>    
+            </table>	  
+        </div>
+        
+        <div>
+            <button id="clear">Очистить</button>
+        </div>
 
     <div class="footer">
         <div>
