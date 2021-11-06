@@ -116,7 +116,7 @@ $R = $_GET["R"];
 
 $res = hit_check($X,$Y,$R);
 $time = microtime(true) - $start;
-$result = array($X,number_format($Y, 8),$R,$res,$currentTime, number_format($time, 10, ".", "") . " sec");
+$result = array($X,$Y,$R,$res,$currentTime, number_format($time, 10, ".", "") . " sec");
 
 if (!isset($_SESSION['history'])) {
 	$_SESSION['history'] = array();
