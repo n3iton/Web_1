@@ -109,7 +109,10 @@ if (!checkX() || !checkY() || !checkR()) {
 
 $X = $_GET["X"];
 $Y = $_GET["Y"];
+settype($Y, 'float');
 $R = $_GET["R"];
+
+
 
 $res = hit_check($X,$Y,$R);
 $time = microtime(true) - $start;
