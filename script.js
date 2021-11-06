@@ -108,8 +108,38 @@ $("input:checkbox").on('click', function() {
   });
 
 
+function loadOldData () {
+    let url = 'main.php';
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", url+"?Reload=true");
+    xhr.send();
+    xhr.onload = function () {
+        if (xhr.status != 200) {
+            alert("Error " + xhr.status + " " + xhr.statusText); 
+            return;
+        }
+
+        $(".scroll-table tr:gt(0)").remove(); 
+        let result = JSON.parse(xhr.responseText);
+        for (let i in result.response) {
+            let nRow = '<tr>';
+            nRow += '<td>' + result.response[i].X + '</td>';
+            nRow += '<td>' + result.response[i].Y + '</td>';
+            nRow += '<td>' + result.response[i].R + '</td>';
+            nRow += '<td>' + result.response[i].result + '</td>';
+            nRow += '<td>' + result.response[i].currentTime + '</td>';
+            nRow += '<td>' + result.response[i].processingTime + '</td>';
+            nRow += '</tr>';
+            $('#result-table').append(nRow);
+        }
+
+    }
+}
+
 document.getElementById("submit").addEventListener("click", submit);
 document.getElementById("clear").addEventListener("click", clear);
+
+loadOldData();
 
 let wrongFieldX = document.getElementById("wrong_field_X");
 let wrongFieldY = document.getElementById("wrong_field_Y");

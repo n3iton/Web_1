@@ -86,6 +86,21 @@ function hit_check($x, $y, $r) {
 	else return "NO";
 }
 
+if ($_GET["Reload"] == "true") {
+	foreach($_SESSION['history'] as $resp) {
+		$jsonValues = '{' .
+			"\"X\":\"$resp[0]\"," .
+			"\"Y\":\"$resp[1]\"," .
+			"\"R\":\"$resp[2]\"," .
+			"\"result\": \"$resp[3]\"," .
+			"\"currentTime\":\"$resp[4]\"," .
+			"\"processingTime\":\"$resp[5]\"" .
+			"}";
+		$answer = $answer . $jsonValues . ',';   
+	}
+	$answer = substr($answer, 0, -1);
+	echo '{' . "\"response\":[" . $answer . ']}';
+} else {
 if (!checkX() || !checkY() || !checkR()) {
     
 	header("Status: 400 Bad Request", true, 400);
@@ -121,5 +136,5 @@ foreach($_SESSION['history'] as $resp) {
 }
 $answer = substr($answer, 0, -1);
 echo '{' . "\"response\":[" . $answer . ']}';
-
+}
 ?>
