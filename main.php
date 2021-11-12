@@ -55,7 +55,7 @@ function checkR() {
 
 function circle_hit_check($x, $y, $r) {
 	$result = "NO";
-	if ($x*$x + $y*$y <= $r*$r)
+	if (sqrt($x*$x + $y*$y) <= $r/2)
 		$result = "YES";
 	return $result;
 }
