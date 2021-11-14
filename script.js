@@ -71,7 +71,6 @@ function submit () {
         
         let url = "main.php";
         url+= "?" + xArr + "Y=" + y + "&R=" + r;
-        alert(url);
 
         let xhr = new XMLHttpRequest();
         xhr.open("GET", url);
@@ -83,9 +82,7 @@ function submit () {
             }
 
             $(".scroll-table tr:gt(0)").remove();
-            //alert(xhr.responseText); 
             let arrayOfResults = JSON.parse(xhr.responseText);
-            //console.log(arrayOfResults);
 
             arrayOfResults.forEach(result => {
                     let nRow = '<tr>';

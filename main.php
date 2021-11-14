@@ -1,10 +1,4 @@
 <?php 
-session_start();
-
-date_default_timezone_set('Europe/Moscow');
-$currentTime = date("H:i:s");
-$start = microtime(true);
-// $X = [];
 
 function checkX() {
 	if (!isset($_GET["X"])) {
@@ -93,6 +87,11 @@ function hit_check($x, $y, $r) {
 	else return "NO";
 }
 
+session_start();
+
+date_default_timezone_set('Europe/Moscow');
+$currentTime = date("H:i:s");
+
 if ($_GET["Reload"] == "true") {
 	foreach ($_SESSION["history"] as $result) {
 		$currentJSONObject = json_encode($result);
@@ -117,6 +116,7 @@ $R = $_GET["R"];
 
 foreach ($ArrX as $X) {
 
+	$start = microtime(true);
 	$res = hit_check($X,$Y,$R);
 	$time = microtime(true) - $start;
 	$result = array(
