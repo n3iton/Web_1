@@ -2,7 +2,6 @@
 
 function checkX() {
 	if (!isset($_GET["X"])) {
-        echo("isset X");
 		return false;
     }
 
@@ -10,13 +9,11 @@ function checkX() {
 
 	foreach ($X as $value)
 		if (!is_numeric($value)) {
-		    echo ("numeric X");
 			return false;
 		} 
 
 	foreach ($X as $value)
 		if (!in_array($value, array(-5, -4, -3, -2, -1, 0, 1, 2, 3))) {
-        	echo ("array X");
 			return false;
     	}
 	return true;
@@ -24,15 +21,12 @@ function checkX() {
 
 function checkY() {
 	if (!isset($_GET["Y"])) {
-        echo("isset Y");
 		return false;
     }
 	if (!is_numeric($_GET["Y"])) {
-        echo("numeric Y");
 		return false;
     }
 	if ($_GET["Y"] <= -5 || $_GET["Y"] >= 3) {
-        echo("array Y");
 		return false;
     }
 	return true;
@@ -40,15 +34,12 @@ function checkY() {
 
 function checkR() {
 	if (!isset($_GET["R"])) {
-        echo("isset R");
 		return false;
     }
 	if (!is_numeric($_GET["R"])) {
-        echo("numeric R");
 		return false;
     }
 	if (!in_array($_GET["R"], array(1, 2, 3, 4, 5))) {
-        echo("array R");
 		return false;
     }
 	return true;
