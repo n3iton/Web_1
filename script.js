@@ -28,11 +28,12 @@ function checkX() {
             counter++
     })
     if (counter === 0) {
-        wrongFieldX.textContent = "Вы должны выбрать одно значение X";
+        wrongFieldX.textContent = "Вы должны выбрать минимум одно значение X";
         return false
     }
     return true;
 }
+
 
 function checkR() {
     let rButtons = document.getElementsByName("R"); 
@@ -54,36 +55,50 @@ function submit () {
     wrongFieldR.textContent = "Choose R";
 
     if (checkX() && checkY() && checkR()) {    
+        x = document.querySelectorAll('input[name="X"]:checked');
+        x = Object.values(x);
+        x = x.map(inputHtml => inputHtml.value);
+        
+        let xArr = "";
+        x.forEach(item => {
+            xArr += "X[]="
+            xArr += item;
+            xArr += "&";
+        });
 
-    x = document.querySelector('input[name="X"]:checked').value;
-    y = document.getElementById("Y").value;
-    r = document.querySelector('input[name="R"]:checked').value;
-    
-    let url = "main.php";
-    url+= "?X=" + x + "&Y=" + y + "&R=" + r;
-    let xhr = new XMLHttpRequest();
-    xhr.open("GET", url);
-    xhr.send();
-    xhr.onload = function () {
-        if (xhr.status != 200) {
-            alert("Error " + xhr.status + " " + xhr.statusText); 
-            return;
-        }
+        y = document.getElementById("Y").value;
+        r = document.querySelector('input[name="R"]:checked').value;
+        
+        let url = "main.php";
+        url+= "?" + xArr + "Y=" + y + "&R=" + r;
+        alert(url);
 
-        $(".scroll-table tr:gt(0)").remove(); 
-        let result = JSON.parse(xhr.responseText);
-        for (let i in result.response) {
-            let nRow = '<tr>';
-            nRow += '<td>' + result.response[i].X + '</td>';
-            nRow += '<td>' + result.response[i].Y + '</td>';
-            nRow += '<td>' + result.response[i].R + '</td>';
-            nRow += '<td>' + result.response[i].result + '</td>';
-            nRow += '<td>' + result.response[i].currentTime + '</td>';
-            nRow += '<td>' + result.response[i].processingTime + '</td>';
-            nRow += '</tr>';
-            $('#result-table').append(nRow);
-        }
-    };
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET", url);
+        xhr.send();
+        xhr.onload = function () {
+            if (xhr.status != 200) {
+                alert("Error " + xhr.status + " " + xhr.statusText); 
+                return;
+            }
+
+            $(".scroll-table tr:gt(0)").remove();
+            //alert(xhr.responseText); 
+            let arrayOfResults = JSON.parse(xhr.responseText);
+            //console.log(arrayOfResults);
+
+            arrayOfResults.forEach(result => {
+                    let nRow = '<tr>';
+                    nRow += '<td>' + result["X"] + '</td>';
+                    nRow += '<td>' + result["Y"] + '</td>';
+                    nRow += '<td>' + result["R"] + '</td>';
+                    nRow += '<td>' + result["res"] + '</td>';
+                    nRow += '<td>' + result["currentTime"] + '</td>';
+                    nRow += '<td>' + result["processingTime"] + '</td>';
+                    nRow += '</tr>';
+                    $('#result-table').append(nRow);
+            });
+        };
     }
 
 }
@@ -95,18 +110,6 @@ function clear () {
     xhr.send();
     $(".scroll-table tr:gt(0)").remove();
 }
-
-$("input:checkbox").on('click', function() {
-    var $box = $(this);
-    if ($box.is(":checked")) {
-      var group = "input:checkbox[name='" + $box.attr("name") + "']";
-      $(group).prop("checked", false);
-      $box.prop("checked", true);
-    } else {
-      $box.prop("checked", false);
-    }
-  });
-
 
 function loadOldData () {
     let url = 'main.php';
@@ -120,18 +123,18 @@ function loadOldData () {
         }
 
         $(".scroll-table tr:gt(0)").remove(); 
-        let result = JSON.parse(xhr.responseText);
-        for (let i in result.response) {
-            let nRow = '<tr>';
-            nRow += '<td>' + result.response[i].X + '</td>';
-            nRow += '<td>' + result.response[i].Y + '</td>';
-            nRow += '<td>' + result.response[i].R + '</td>';
-            nRow += '<td>' + result.response[i].result + '</td>';
-            nRow += '<td>' + result.response[i].currentTime + '</td>';
-            nRow += '<td>' + result.response[i].processingTime + '</td>';
-            nRow += '</tr>';
-            $('#result-table').append(nRow);
-        }
+        let arrayOfResults = JSON.parse(xhr.responseText);
+        arrayOfResults.forEach(result => {
+                let nRow = '<tr>';
+                nRow += '<td>' + result["X"] + '</td>';
+                nRow += '<td>' + result["Y"] + '</td>';
+                nRow += '<td>' + result["R"] + '</td>';
+                nRow += '<td>' + result["res"] + '</td>';
+                nRow += '<td>' + result["currentTime"] + '</td>';
+                nRow += '<td>' + result["processingTime"] + '</td>';
+                nRow += '</tr>';
+                $('#result-table').append(nRow);
+        });
 
     }
 }

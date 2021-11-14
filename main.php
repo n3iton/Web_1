@@ -4,20 +4,27 @@ session_start();
 date_default_timezone_set('Europe/Moscow');
 $currentTime = date("H:i:s");
 $start = microtime(true);
+// $X = [];
 
 function checkX() {
 	if (!isset($_GET["X"])) {
         echo("isset X");
 		return false;
     }
-	if (!is_numeric($_GET["X"])) {
-        echo("numeric X");
-		return false;
-    }
-	if (!in_array($_GET["X"], array(-5, -4, -3, -2, -1, 0, 1, 2, 3))) {
-        echo ("array X");
-		return false;
-    }
+
+	$X = $_GET["X"];
+
+	foreach ($X as $value)
+		if (!is_numeric($value)) {
+		    echo ("numeric X");
+			return false;
+		} 
+
+	foreach ($X as $value)
+		if (!in_array($value, array(-5, -4, -3, -2, -1, 0, 1, 2, 3))) {
+        	echo ("array X");
+			return false;
+    	}
 	return true;
 }
 
@@ -87,57 +94,55 @@ function hit_check($x, $y, $r) {
 }
 
 if ($_GET["Reload"] == "true") {
-	foreach($_SESSION['history'] as $resp) {
-		$jsonValues = '{' .
-			"\"X\":\"$resp[0]\"," .
-			"\"Y\":\"$resp[1]\"," .
-			"\"R\":\"$resp[2]\"," .
-			"\"result\": \"$resp[3]\"," .
-			"\"currentTime\":\"$resp[4]\"," .
-			"\"processingTime\":\"$resp[5]\"" .
-			"}";
-		$answer = $answer . $jsonValues . ',';   
+	foreach ($_SESSION["history"] as $result) {
+		$currentJSONObject = json_encode($result);
+		$jsonResult .= $currentJSONObject;
+		$jsonResult .= ",";
 	}
-	$answer = substr($answer, 0, -1);
-	echo '{' . "\"response\":[" . $answer . ']}';
+	$jsonResult = substr($jsonResult, 0, -1);
+	$jsonResult = "[" . $jsonResult . "]";
+	echo($jsonResult);
 } else {
+	
 if (!checkX() || !checkY() || !checkR()) {
-    
 	header("Status: 400 Bad Request", true, 400);
 	exit;
 }
 
-$X = $_GET["X"];
+$ArrX = $_GET["X"];
 $Y = $_GET["Y"];
 settype($Y, 'float');
 $R = $_GET["R"];
 
 
+foreach ($ArrX as $X) {
 
-$res = hit_check($X,$Y,$R);
-$time = microtime(true) - $start;
-$result = array($X,$Y,$R,$res,$currentTime, number_format($time, 10, ".", "") . " sec");
+	$res = hit_check($X,$Y,$R);
+	$time = microtime(true) - $start;
+	$result = array(
+	'X' => $X,
+	'Y' => $Y,
+	'R' => $R,
+	'res' => $res,
+	'currentTime' => $currentTime,
+	'processingTime' => number_format($time, 10, ".", "") . " sec");
 
-if (!isset($_SESSION['history'])) {
-	$_SESSION['history'] = array();
+	if (!isset($_SESSION['history'])) {
+		$_SESSION['history'] = array();
+	}
+
+	array_push($_SESSION['history'], $result);
 }
 
-array_push($_SESSION['history'], $result);
+	foreach ($_SESSION["history"] as $result) {
+		$currentJSONObject = json_encode($result);
+		$jsonResult .= $currentJSONObject;
+		$jsonResult .= ",";
+	}
 
-$answer = "";
+	$jsonResult = substr($jsonResult, 0, -1);
+	$jsonResult = "[" . $jsonResult . "]";
+	echo ($jsonResult);
+}
 
-foreach($_SESSION['history'] as $resp) {
-    $jsonValues = '{' .
-        "\"X\":\"$resp[0]\"," .
-        "\"Y\":\"$resp[1]\"," .
-        "\"R\":\"$resp[2]\"," .
-        "\"result\": \"$resp[3]\"," .
-        "\"currentTime\":\"$resp[4]\"," .
-        "\"processingTime\":\"$resp[5]\"" .
-        "}";
-    $answer = $answer . $jsonValues . ',';   
-}
-$answer = substr($answer, 0, -1);
-echo '{' . "\"response\":[" . $answer . ']}';
-}
 ?>
