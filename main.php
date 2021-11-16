@@ -78,6 +78,16 @@ function hit_check($x, $y, $r) {
 	else return "NO";
 }
 
+function toJson($arr) {
+	$json = "{";
+	foreach($arr as $key => $value) {
+		$json .= "\"" . $key . "\"" . ": " . "\"" . $value . "\"" . ",";
+	}
+	$json = substr($json, 0, -1);
+	$json .= "}";
+	return $json;
+}
+
 session_start();
 
 date_default_timezone_set('Europe/Moscow');
@@ -85,7 +95,7 @@ $currentTime = date("H:i:s");
 
 if ($_GET["Reload"] == "true") {
 	foreach ($_SESSION["history"] as $result) {
-		$currentJSONObject = json_encode($result);
+		$currentJSONObject = toJson($result);
 		$jsonResult .= $currentJSONObject;
 		$jsonResult .= ",";
 	}
@@ -126,7 +136,7 @@ foreach ($ArrX as $X) {
 }
 
 	foreach ($_SESSION["history"] as $result) {
-		$currentJSONObject = json_encode($result);
+		$currentJSONObject = toJson($result);
 		$jsonResult .= $currentJSONObject;
 		$jsonResult .= ",";
 	}
